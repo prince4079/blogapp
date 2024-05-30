@@ -69,9 +69,10 @@ public class SpringSecurityConfig {
                 		"/books/**",
                 		"/file/uploadtodb",
                 		"/file/fileSystem/**"
+                		,"/invoice/**"
                 		).permitAll()
-                .anyRequest()
-                .authenticated()
+//                .anyRequest()
+//                .authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

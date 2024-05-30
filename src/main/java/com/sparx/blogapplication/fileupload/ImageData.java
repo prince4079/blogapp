@@ -17,7 +17,7 @@ public class ImageData {
 
     private String name;
     private String type;
-    @Lob
+//    @Lob
     @Column(name = "imagedata",length = 1000 , columnDefinition="MEDIUMBLOB")
     private byte[] imageData;
 	public ImageData() {
