@@ -130,4 +130,10 @@ public class ExcelDataService  implements IExcelDataService{
 		 return WorkbookFactory.create(inputStream);
 
 	    }
+	@Override
+	public List<Invoice> getAllInvoice() {
+		// TODO Auto-generated method stub
+		List<Invoice> invoiceList=repo.findAll();
+		return invoiceList;
+	}
 }

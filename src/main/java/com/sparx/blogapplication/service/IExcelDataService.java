@@ -8,4 +8,5 @@ public interface IExcelDataService {
 	List<Invoice> getExcelDataAsList();
 
 	int saveExcelData(List<Invoice> invoices);
+	List<Invoice> getAllInvoice();
 }
