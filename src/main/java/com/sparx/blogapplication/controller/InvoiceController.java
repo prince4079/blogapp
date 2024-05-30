@@ -25,6 +25,7 @@ import com.sparx.blogapplication.service.IExcelDataService;
 import com.sparx.blogapplication.service.IFileUploaderService;
 import com.sparx.blogapplication.util.ExcelGenerator;
 
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -80,7 +81,7 @@ public class InvoiceController {
 	}
 	
 	@GetMapping("/export-to-excel")
-    public void exportIntoExcelFile(HttpServletResponse response) throws IOException {
+    public   void exportIntoExcelFile(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         LocalDateTime time=LocalDateTime.now();
 //        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -88,10 +89,11 @@ public class InvoiceController {
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=student" + time + ".xlsx";
-        response.setHeader(headerKey, headerValue);
+//        response.setHeader(headerKey, headerValue);
 
         List <Invoice> listOfStudents = excelservice.getAllInvoice();
         ExcelGenerator generator = new ExcelGenerator(listOfStudents);
         generator.generateExcelFile(response);
+//        return output;
     }
 }

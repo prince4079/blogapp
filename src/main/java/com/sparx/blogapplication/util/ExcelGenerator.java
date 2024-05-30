@@ -76,13 +76,16 @@ public class ExcelGenerator {
             createCell(row,columnCount++,record.getReceivedDate(),style);
         }
     }
-    public void generateExcelFile(HttpServletResponse response) throws IOException {
+    public   void generateExcelFile(HttpServletResponse response) throws IOException {
+//    	  response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+//    	    response.setHeader("Content-Disposition", "attachment; filename=\"students.xlsx\"");
         writeHeader();
         write();
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
         workbook.close();
         outputStream.close();
+//        return outputStream;
     }
 
 }
