@@ -2,10 +2,13 @@ package com.sparx.blogapplication.fileupload;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +22,8 @@ public class FileUploadService {
 	private ImageDataRepository imageDataRepository;
 	@Autowired
 	private FileDataRepository fileDataRepository;
-    
-    String FOLDER_PATH="/home/spx147/Downloads/images/img";
+    @Value("${folder.path}")
+    String FOLDER_PATH;
 	public String uploadFileToDatabase(MultipartFile file) {
 		ImageData imageData = new ImageData();
 		imageData.setName(file.getOriginalFilename());
@@ -47,8 +50,7 @@ public class FileUploadService {
 	
 	public String uploadImageToFileSystem(MultipartFile file) throws IOException {
         String filePath=FOLDER_PATH+file.getOriginalFilename();
-       
-        
+        Path path=Paths.get(filePath);
         FileData fileData=new FileData();
         fileData.setName(file.getOriginalFilename());
         fileData.setType(file.getContentType());
@@ -58,6 +60,8 @@ public class FileUploadService {
        try {
 //    	   Files.copy(file.getInputStream(),Paths.get(filePath));
     	   file.transferTo(new File(filePath));
+    	   Files.copy(file.getInputStream(), path,StandardCopyOption.REPLACE_EXISTING);
+    	   
        }catch(Exception Ex) {
     	   Ex.printStackTrace();
        }
@@ -65,8 +69,10 @@ public class FileUploadService {
 
         if (fileData != null) {
             return "file uploaded successfully : " + filePath;
+        }else {
+        	return "something went wrong";
         }
-        return null;
+        
     }
 	
 	 public byte[] downloadImageFromFileSystem(String fileName) throws IOException, java.io.IOException {

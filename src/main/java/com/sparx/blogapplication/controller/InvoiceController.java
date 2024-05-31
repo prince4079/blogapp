@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.time.*;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ import com.sparx.blogapplication.service.IExcelDataService;
 import com.sparx.blogapplication.service.IFileUploaderService;
 import com.sparx.blogapplication.util.ExcelGenerator;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -94,4 +98,27 @@ public class InvoiceController {
         ExcelGenerator generator = new ExcelGenerator(listOfStudents);
         generator.generateExcelFile(response);
     }
+	@GetMapping("/downloadExcel")
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Generate Excel file
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        workbook.createSheet("Sheet 1").createRow(0).createCell(0).setCellValue("Hello, World!");
+
+        // Set response headers
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"example.xlsx\"");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
+        // Write the workbook to the response output stream
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
+            workbook.write(outputStream);
+            outputStream.flush();
+        } finally {
+            // Close the workbook
+            workbook.close();
+        }
+    }
+
 }
