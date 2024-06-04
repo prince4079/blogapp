@@ -26,13 +26,13 @@ import com.sparx.blogapplication.service.IExcelDataService;
 import com.sparx.blogapplication.service.IFileUploaderService;
 import com.sparx.blogapplication.util.ExcelGenerator;
 
-<<<<<<< HEAD
+
 import jakarta.servlet.ServletOutputStream;
-=======
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
->>>>>>> dev
+
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController

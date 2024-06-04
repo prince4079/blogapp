@@ -43,4 +43,11 @@ public class GlobalExceptionHandler {
 		response.setMessage(message);
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	@ExceptionHandler(InvoiceNotFoundException.class)
+	public ResponseEntity<ApiResponse> InvoiceNotFoundException(InvoiceNotFoundException ex){
+		ApiResponse response=new ApiResponse();
+		String message=ex.getMessage();
+		response.setMessage(message);
+		return new ResponseEntity<ApiResponse>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

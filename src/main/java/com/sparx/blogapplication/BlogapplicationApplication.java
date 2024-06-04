@@ -74,8 +74,8 @@ public class BlogapplicationApplication {
 		System.out.println(new Date());
 		Test t=new Test("prince");
 		Class<Test> t2=Test.class;
-		System.out.println(t2.toString());
-		System.out.println("getting the result of the .class method"+Test.class);
+//		System.out.println(t2.toString());
+//		System.out.println("getting the result of the .class method"+Test.class);
 	}
     
 	@Bean
